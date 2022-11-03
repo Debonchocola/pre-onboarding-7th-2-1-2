@@ -53,15 +53,39 @@ const Main = () => {
               <TabList
                 onChange={handleChange}
                 aria-label="lab API tabs example"
+                sx={{ margin: "0 auto", width: "390px", height: "40px" }}
               >
-                <Tab label="전체" value="1" />
-                <Tab label="대형" value="2" />
-                <Tab label="중형" value="3" />
-                <Tab label="소형" value="4" />
-                <Tab label="SUV" value="5" />
+                <Tab
+                  label="전체"
+                  value="1"
+                  sx={{ width: "62px", height: "27px" }}
+                />
+                <Tab
+                  label="대형"
+                  value="2"
+                  sx={{ width: "62px", height: "27px" }}
+                />
+                <Tab
+                  label="중형"
+                  value="3"
+                  sx={{ width: "62px", height: "27px" }}
+                />
+                <Tab
+                  label="소형"
+                  value="4"
+                  sx={{ width: "62px", height: "27px" }}
+                />
+                <Tab
+                  label="SUV"
+                  value="5"
+                  sx={{ width: "62px", height: "27px" }}
+                />
               </TabList>
             </Box>
-            <TabPanel value="1">
+            <TabPanel
+              value="1"
+              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
+            >
               {car &&
                 car.map((item, i) => (
                   <ItemList
@@ -77,7 +101,10 @@ const Main = () => {
                   />
                 ))}
             </TabPanel>
-            <TabPanel value="2">
+            <TabPanel
+              value="2"
+              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
+            >
               {car && !car.length && <div>차량이 없습니다.</div>}
               {car &&
                 car
@@ -96,7 +123,10 @@ const Main = () => {
                     />;
                   })}
             </TabPanel>
-            <TabPanel value="3">
+            <TabPanel
+              value="3"
+              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
+            >
               {" "}
               {car &&
                 car
@@ -115,7 +145,10 @@ const Main = () => {
                     />
                   ))}
             </TabPanel>
-            <TabPanel value="4">
+            <TabPanel
+              value="4"
+              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
+            >
               {" "}
               {car &&
                 car
@@ -134,7 +167,10 @@ const Main = () => {
                     />
                   ))}
             </TabPanel>
-            <TabPanel value="5">
+            <TabPanel
+              value="5"
+              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
+            >
               {car &&
                 car
                   .filter((item) => item.attribute.segment === "SUV")

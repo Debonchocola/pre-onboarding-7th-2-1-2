@@ -10,4 +10,6 @@ const HeaderTitle = styled.div`
   font-size: 2rem;
   font-weight: bold;
   margin: 10px auto;
+  width: 390px;
+  height: 60px;
 `;

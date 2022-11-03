@@ -27,19 +27,18 @@ const ItemList = ({ id, name, brand, segment, fuelType, amount, img }) => {
   return (
     <Link to={`/${id}`}>
       <ItemContainer>
-        <div>
+        <CarInfo>
           <div>{brand}</div>
           <div>{name}</div>
+          {segmentChange} / {feulTypeChange}
           <div>
-            {segmentChange} / {feulTypeChange}
-          </div>
-          <div>
+            {" "}
             월 {amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 부터
           </div>
-        </div>
-        <div>
+        </CarInfo>
+        <CarImg>
           <ItemImage src={img} alt="" />
-        </div>
+        </CarImg>
       </ItemContainer>
     </Link>
   );
@@ -47,14 +46,27 @@ const ItemList = ({ id, name, brand, segment, fuelType, amount, img }) => {
 export default ItemList;
 
 const ItemContainer = styled.div`
-  border-bottom: 2px solid black;
-  text-align: center;
-  width: 60%;
-  margin: 0 auto;
-  display: grid;
+  display: flex;
+  width: 390px;
+  height: 120px;
   justify-content: space-between;
 `;
 
+const CarInfo = styled.div`
+  width: 136px;
+  height: 72px;
+  font-size: 15px;
+`;
+
+const CarImg = styled.div`
+  width: 152px;
+  height: 80px;
+  background-color: D9D9D9;
+`;
+// margin-top: 20px;
+// margin-left: 0px;
+// text-align: left;
 const ItemImage = styled.img`
-  width: 20%;
+  width: 152px;
+  height: 80px;
 `;
