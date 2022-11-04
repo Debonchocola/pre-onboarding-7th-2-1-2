@@ -8,11 +8,10 @@ const Nothing = () => {
 export default Nothing;
 
 const NoData = styled.div`
+  width: 390px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 21px;
+  font-weight: bold;
 `;

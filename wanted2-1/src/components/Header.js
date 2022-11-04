@@ -12,4 +12,5 @@ const HeaderTitle = styled.div`
   margin: 10px auto;
   width: 390px;
   height: 60px;
+  border-bottom: 1px solid #000000;
 `;

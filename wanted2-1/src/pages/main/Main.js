@@ -7,19 +7,20 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import styled from "styled-components";
+import Nothing from "../../components/Nothing";
+import Button from "../../components/Button";
 
 const Main = () => {
   const [car, setCar] = useState([]);
   const [value, setValue] = React.useState("1");
   const [isLoading, setIsLoading] = useState(true);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [filteredCar, setFilteredCar] = useState([]);
   const getCar = async () => {
     await axios
       .get("https://preonboarding.platdev.net/api/cars")
       .then((result) => {
         setCar(result.data.payload);
+        setFilteredCar(result.data.payload);
         setIsLoading(false);
         console.log(result.data.payload);
         console.log(car);
@@ -30,167 +31,42 @@ const Main = () => {
     getCar();
   }, []);
 
+  useEffect(() => {
+    console.log(filteredCar);
+  }, [filteredCar]);
+
+  const dayday1 = new Date(car.startDate);
+  const dayday2 = new Date(car.createDate);
+  const dayday3 = (dayday2 - dayday1) / (60 * 60 * 24 * 1000);
+
   return (
     <MainContainer>
-      {isLoading ? (
-        <p>loading...</p>
-      ) : (
-        <Box
-          sx={{
-            width: "100%",
-            typography: "body1",
-          }}
-        >
-          <TabContext value={value}>
-            <Box
-              sx={{
-                borderBottom: 1,
-                borderColor: "divider",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <TabList
-                onChange={handleChange}
-                aria-label="lab API tabs example"
-                sx={{ margin: "0 auto", width: "390px", height: "40px" }}
-              >
-                <Tab
-                  label="전체"
-                  value="1"
-                  sx={{ width: "62px", height: "27px" }}
-                />
-                <Tab
-                  label="대형"
-                  value="2"
-                  sx={{ width: "62px", height: "27px" }}
-                />
-                <Tab
-                  label="중형"
-                  value="3"
-                  sx={{ width: "62px", height: "27px" }}
-                />
-                <Tab
-                  label="소형"
-                  value="4"
-                  sx={{ width: "62px", height: "27px" }}
-                />
-                <Tab
-                  label="SUV"
-                  value="5"
-                  sx={{ width: "62px", height: "27px" }}
-                />
-              </TabList>
-            </Box>
-            <TabPanel
-              value="1"
-              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
-            >
-              {car &&
-                car.map((item, i) => (
-                  <ItemList
-                    key={i}
-                    item={item}
-                    name={item.attribute.name}
-                    brand={item.attribute.brand}
-                    segment={item.attribute.segment}
-                    fuelType={item.attribute.fuelType}
-                    amount={item.amount}
-                    img={item.attribute.imageUrl}
-                    id={item.id}
-                  />
-                ))}
-            </TabPanel>
-            <TabPanel
-              value="2"
-              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
-            >
-              {car && !car.length && <div>차량이 없습니다.</div>}
-              {car &&
-                car
-                  .filter((item) => item.attribute.segment === "E")
-                  .map((item, i) => {
-                    <ItemList
-                      key={i}
-                      item={item}
-                      name={item.attribute.name}
-                      brand={item.attribute.brand}
-                      segment={item.attribute.segment}
-                      fuelType={item.attribute.fuelType}
-                      amount={item.amount}
-                      img={item.attribute.imageUrl}
-                      id={item.id}
-                    />;
-                  })}
-            </TabPanel>
-            <TabPanel
-              value="3"
-              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
-            >
-              {" "}
-              {car &&
-                car
-                  .filter((item) => item.attribute.segment === "D")
-                  .map((item, i) => (
-                    <ItemList
-                      key={i}
-                      item={item}
-                      name={item.attribute.name}
-                      brand={item.attribute.brand}
-                      segment={item.attribute.segment}
-                      fuelType={item.attribute.fuelType}
-                      amount={item.amount}
-                      img={item.attribute.imageUrl}
-                      id={item.id}
-                    />
-                  ))}
-            </TabPanel>
-            <TabPanel
-              value="4"
-              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
-            >
-              {" "}
-              {car &&
-                car
-                  .filter((item) => item.attribute.segment === "C")
-                  .map((item, i) => (
-                    <ItemList
-                      key={i}
-                      item={item}
-                      name={item.attribute.name}
-                      brand={item.attribute.brand}
-                      segment={item.attribute.segment}
-                      fuelType={item.attribute.fuelType}
-                      amount={item.amount}
-                      img={item.attribute.imageUrl}
-                      id={item.id}
-                    />
-                  ))}
-            </TabPanel>
-            <TabPanel
-              value="5"
-              sx={{ margin: "0 auto", width: "390px", height: "120px" }}
-            >
-              {car &&
-                car
-                  .filter((item) => item.attribute.segment === "SUV")
-                  .map((item, i) => (
-                    <ItemList
-                      key={i}
-                      item={item}
-                      name={item.attribute.name}
-                      brand={item.attribute.brand}
-                      segment={item.attribute.segment}
-                      fuelType={item.attribute.fuelType}
-                      amount={item.amount}
-                      img={item.attribute.imageUrl}
-                      id={item.id}
-                    />
-                  ))}
-            </TabPanel>
-          </TabContext>
-        </Box>
-      )}
+      <Button car={car} setFilteredCar={setFilteredCar} />
+      <CarItemBox>
+        {!isLoading ? (
+          filteredCar && filteredCar.length > 0 ? (
+            filteredCar.map((item, i) => (
+              <ItemList
+                key={i}
+                item={item}
+                name={item.attribute.name}
+                brand={item.attribute.brand}
+                segment={item.attribute.segment}
+                fuelType={item.attribute.fuelType}
+                amount={item.amount}
+                img={item.attribute.imageUrl}
+                id={item.id}
+                calDate={dayday3}
+                isLoading={isLoading}
+              />
+            ))
+          ) : (
+            <Nothing />
+          )
+        ) : (
+          <p>...로딩중</p>
+        )}
+      </CarItemBox>
     </MainContainer>
   );
 };
@@ -198,3 +74,8 @@ const Main = () => {
 export default Main;
 
 const MainContainer = styled.div``;
+
+const CarItemBox = styled.div`
+  width: 390px;
+  margin: 0 auto;
+`;

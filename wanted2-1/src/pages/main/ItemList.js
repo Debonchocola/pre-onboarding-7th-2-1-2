@@ -1,8 +1,21 @@
 /* eslint-disable default-case */
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import NewBotton from "../../components/NewBotton";
 
-const ItemList = ({ id, name, brand, segment, fuelType, amount, img }) => {
+const ItemList = ({
+  item,
+  id,
+  name,
+  brand,
+  segment,
+  fuelType,
+  amount,
+  img,
+  calDate,
+}) => {
+  const navigate = useNavigate();
+
   let segmentChange = segment.replace(/(C|D|E)/g, function (v) {
     switch (v) {
       case "C":
@@ -24,23 +37,29 @@ const ItemList = ({ id, name, brand, segment, fuelType, amount, img }) => {
         return "하이브리드";
     }
   });
+
+  const onClickCarInfo = () => {
+    navigate(`/${id}`, {
+      state: item,
+    });
+  };
+
   return (
-    <Link to={`/${id}`}>
-      <ItemContainer>
-        <CarInfo>
-          <div>{brand}</div>
-          <div>{name}</div>
-          {segmentChange} / {feulTypeChange}
-          <div>
-            {" "}
-            월 {amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 부터
-          </div>
-        </CarInfo>
-        <CarImg>
-          <ItemImage src={img} alt="" />
-        </CarImg>
-      </ItemContainer>
-    </Link>
+    <ItemContainer onClick={onClickCarInfo}>
+      <CarInfo>
+        <div>{brand}</div>
+        <div>{name}</div>
+        {segmentChange} / {feulTypeChange}
+        <div>
+          {" "}
+          월 {amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원 부터
+        </div>
+      </CarInfo>
+      <CarImg>
+        <ItemImage src={img} alt="" />
+        {calDate === isNaN ? <NewBotton /> : null}
+      </CarImg>
+    </ItemContainer>
   );
 };
 export default ItemList;
@@ -56,12 +75,14 @@ const CarInfo = styled.div`
   width: 136px;
   height: 72px;
   font-size: 15px;
+  padding: 1rem 1.3rem;
 `;
 
 const CarImg = styled.div`
   width: 152px;
   height: 80px;
   background-color: D9D9D9;
+  padding: 1rem 1.3rem;
 `;
 // margin-top: 20px;
 // margin-left: 0px;
@@ -69,4 +90,5 @@ const CarImg = styled.div`
 const ItemImage = styled.img`
   width: 152px;
   height: 80px;
+  background-color: #d9d9d9;
 `;
