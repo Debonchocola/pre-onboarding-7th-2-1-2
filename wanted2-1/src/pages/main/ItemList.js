@@ -1,7 +1,6 @@
 /* eslint-disable default-case */
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import NewBotton from "../../components/NewBotton";
 
 const ItemList = ({
   item,
@@ -57,7 +56,7 @@ const ItemList = ({
       </CarInfo>
       <CarImg>
         <ItemImage src={img} alt="" />
-        {calDate === isNaN ? <NewBotton /> : null}
+        {/* {calDate === isNaN ? <NewBotton /> : null} */}
       </CarImg>
     </ItemContainer>
   );
